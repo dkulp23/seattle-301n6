@@ -1,5 +1,5 @@
 (function(module) {
-  var doctors = [
+  const doctors = [
     { number: 20, actor: 'William Hartnell',      begin: 1963, end: 1966 },
     { number: 30, actor: 'Patrick Troughton',     begin: 1966, end: 1969 },
     { number: 3,  actor: 'Jon Pertwee',           begin: 1970, end: 1974 },
@@ -14,78 +14,85 @@
     { number: 12, actor: 'Peter Capaldi',         begin: 2013, end: 2013 }
   ];
 
-  // var obj = {
-  //   // Order of object properties is not guaranteed!
-  //   number1: 1,
-  //   actor2: "William Hartnell",
-  //   sayHello3: function() {
-  //     console.log('hello');
-  //   },
-  //   begin4: 1963,
-  //   end5: 1966
-  // };
+  // `.filter()` => returns a new array of values based on conditional return statement
+  doctors.filter(function(doctor) {
+    return doctor.number > 10
+  }) // => Returns a new array of doctors; only those with a `number` value greater than 10
 
-  // for(var i = 0; i < doctors.length; i++) {
-  //   console.log(doctors[i]);
-  // }
-
-  // doctors.forEach(function(ele) {
-  //   console.log(ele.actor);
-  // });
-
-  // function mapTheDocs(arrOfDocs) {
-  //   arrOfDocs.map(function(ele) {
-  //     // do some code...
-  //   })
-  // }
+  let filteredDocs = doctors.filter(function(doctor) {
+    return doctor.number > 10
+  }) // => No return value, given that its' been assigned to the `filteredDocs` var
 
 
-  var newDoctors = doctors.map(function(ele) {
+  // `.map()` => returns a new array of values, which have been manipulated in some way
+  doctors.map(function(doctor) {
     return {
-      order: '#' + ele.number,
-      playedBy: ele.actor,
-      yearsPlayed: (ele.end - ele.begin) + 1
+      number: doctor.number,
+      name: doctor.actor.split(' '),
+      yearsPlayed: (doctor.end - doctor.begin) + 1
     }
-  });
+  }) // => Returns a new array of doctors; each new object has a number, name, and yearsPlayed prop with pass-thru or new values
 
-
-  var filterDoctors = newDoctors.filter(function(ele) {
-    if (ele.yearsPlayed > 4) {
-      return ele;
-    } else {
-      // console.log(ele);
-    }
-  });
-
-  var mapAndFilter = doctors.filter(function(ele) {
-    return ele.end > 2000;
-  }).map(function(ele) {
+  // map and filter chain
+  doctors.map(function(doctor) {
     return {
-      actorName: ele.actor
+      number: doctor.number,
+      name: doctor.actor.split(' '),
+      yearsPlayed: (doctor.end - doctor.begin)
     }
+  }).filter(function(doctor) { // Newly mapped array is returned from map, and filter is called on that new array
+    return doctor.yearsPlayed < 5 // We're now filtering on the newly returned object properties.
   })
 
 
-  // This is a very basic use case for reduce
-  // var arr = [1, 2, 3, 4];
-  //
-  // var reduceArr = arr.reduce(function(total, ele){
-  //   console.log('total', total);
-  //   console.log('ele', ele);
-  //   return total + ele;
-  // }, 0);
+  // `.reduce()` => returns a new value; defaulting to integer values, but can also be a new array of values
+  var arr = [34, 55, 3, 23, 12, 7, 99]
 
-  var reduceDoctors = doctors.reduce(function(a, b) {
-    if (b.end > 2000) {
-      a.push({
-        actorName: b.actor,
-        yearsPlayed: (b.end - b.begin) + 1
+  arr.reduce(function(acc, current) {
+    return acc + current
+  })
+  // returns => 233 (default integer is `0`)
+  arr.reduce(function(acc, current) {
+    return acc + current
+  }, 1)
+  // returns => 234 (because we changed the default integet to `1`)
+
+  // Below passes an array as the accumulator.
+  doctors.reduce(function(acc, curr) {
+    if (curr.number > 10) {
+      acc.push({
+        number: curr.number,
+        name: curr.actor.split(' '),
+        yearsPlayed: (curr.end - curr.begin) + 1
       })
     }
-    return a;
-  }, []);
-  console.log('IIFE Ran.');
+    return acc
+  }, [])
 
-  module.doctors = newDoctors;
+  // var newArr = doctors.reduce(function(acc, curr) {
+  //   if (curr.number > 10) {
+  //     acc.push({
+  //       number: curr.number,
+  //       name: curr.actor.split(' '),
+  //       yearsPlayed: (curr.end - curr.begin) + 1
+  //     })
+  //   }
+  //   return acc
+  // }, [])
+  // .filter()
+  // .map()
+  // .reduce()
+
+
+  // below is just an example of assigning methods to an object, and then handing that object out to the global scope
+  articleView = {}
+  articleView.method1 = function() {}
+  articleView.method2 = function() {}
+  articleView.method3 = function() {}
+  articleView.method4 = function() {}
+  articleView.method5 = function() {}
+  articleView.method6 = function() {}
+
+  module.articleView = articleView
 
 })(window)
