@@ -1,0 +1,17 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "301 rest api demo",
+  "main": "server.js",
+  "scripts": {
+    "test": "whopper"
+  },
+  "keywords": [
+    "howdy"
+  ],
+  "author": "dana kulp",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
